@@ -1,5 +1,6 @@
 from cash_debt_web import db
 from datetime import datetime
+from werkzeug.security import check_password_hash, generate_password_hash
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -8,10 +9,10 @@ class User(db.Model):
     joined_date = db.Column(db.DateTime, default=datetime.utcnow)
     debtors = db.relationship('Debtor', backref='user', lazy=True)
     
-    def set_password(password):
+    def set_password(self, password):
         self.password = generate_password_hash(password)
         
-    def check_password(password):
+    def check_password(self, password):
         return check_password_hash(self.password, password)    
     
     def __repr__(self):
