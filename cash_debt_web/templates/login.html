@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Login
+{% endblock %}
+
+{% block body %}
+<form action="" method="post" novalidate>
+    <input type="email" name="email" id="email" > </td>
+    <input type="password" name="password" id="password"> </td>
+    <input type="submit" name="login" value="Log In"></td>
+    <input type="submit" name="register" value="Registration"></td>
+</form>
+{{ errors }}
+{% endblock %}

@@ -7,6 +7,10 @@
     <title>{% block title %} {% endblock %}</title>
 </head>
 <body>
+    <a href="{{ url_for('index') }}">Main</a>
+    <a href="{{ url_for('registration') }}">Registration</a>
+    <a href="{{ url_for('login') }}">Login</a>
+
     {% block body %} {% endblock %}
 </body>
 </html>
