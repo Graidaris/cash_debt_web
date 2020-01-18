@@ -5,6 +5,12 @@
   padding: 8% 0 0;
   margin: auto;
 }
+.form .errors{
+  text-align: center;
+  color: white;
+  background-color: #EF3B3A;
+}
+
 .form {
   position: relative;
   z-index: 1;
@@ -97,4 +103,25 @@ body {
   font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;      
+}
+
+
+@media only screen and (max-width: 374px) {
+
+  .login-page {
+    width: 300px;
+    padding: 1% 0 0;
+    margin: auto;
+  }
+
+  .form {
+    position: relative;
+    z-index: 1;
+    background: #FFFFFF;
+    max-width: 360px;
+    margin: 0 auto 100px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+  }
 }
