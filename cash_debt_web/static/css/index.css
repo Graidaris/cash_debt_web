@@ -2,31 +2,76 @@
 
 .user_debtors{
     width: 600px;
-    padding: 8% 0 0;
+    padding: 4% 0 0;
     margin: auto;
-    background-color: red;
-    
 }
 .all_debtors{
     float: left;
-    width: 60%;
+    width: 59%;
+}
+
+.debtor{
+    background-size: auto, auto;
+    background-color: #0099e5;
+    color: #FFFFFF;
+    font-size: 34px;
+    padding: 15px;
+    margin-top: 2px;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+    min-height: 100px;
+    height: 100px;
+}
+
+.debtor a{
+    font-size: 18px;
+}
+
+.debtor input[type=submit]{
+    font-family: "Roboto", sans-serif;
+    text-transform: uppercase;
+    outline: 0;
+    background-color: #ff4c4c;
+    width: 40%;
+    border: 0;
+    padding: 15px;
+    color: #ffffff;
+    font-size: 12px;
+    cursor: pointer;
+    margin-top: 15px;
+    margin-left: 15px;
+    float: left;
+}
+
+.debtor::after{
+    clear: both;
+}
+
+input[type=submit] {
+    font-family: "Roboto", sans-serif;
+    text-transform: uppercase;
+    outline: 0;
+    background: #4CAF50;
+    width: 100%;
+    border: 0;
+    padding: 15px;
+    color: #FFFFFF;
+    font-size: 14px;
+    -webkit-transition: all 0.3 ease;
+    transition: all 0.3 ease;
+    cursor: pointer;
+    margin-top: 2px;
 }
 .user{
-    background-color: brown;
+    background-color: #34bf49;
     text-overflow: clip;
     overflow: hidden; 
     float: right;
     width: 40%;
     height: 100%;
-}
-.debtor{
-    background-color: azure;
-    color: #4d4d4d;
-    font-size: 34px;
-    padding: 3% 0 0;
-    margin-top: 2px;
-}
-
-.debtor a{
-    font-size: 18px;
+    padding: 3px;
+    color: #FFFFFF;
+    font-size: 20px;
+    text-align: center;
+    min-height: 100%;
+    height: 100%;
 }

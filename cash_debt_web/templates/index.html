@@ -4,10 +4,6 @@
 Cash debt
 {% endblock %}
 
-{% block header %}
-    <a href="{{ url_for('sign_out') }}">Sign out</a>
-{% endblock %}
-
 {% block head %}
 <link href="../static/css/index.css" rel="stylesheet"> 
 {% endblock %}
@@ -15,16 +11,26 @@ Cash debt
 {% block body %}
 
 <div class="user_debtors">
-    <div class="user">Hello  {{ username.email }} !</div>
+
+    <div class="user">You're sign in as: <strong>{{ username.email }}</strong>
+        <form action="{{ url_for('add_debt') }}">
+            <input  type="submit" value="Add debtor">
+        </form>
+        <form action="{{ url_for('sign_out') }}">
+            <input type="submit" value="Sign Out">
+        </form>
+    </div>
     
     <div class="all_debtors">
         {% for debtor in debtors %}
             <div class="debtor">
-                <dt>{{ debtor.name }}
-                    {{ debtor.money }}</dt>
-                
-                <a href="{{ url_for('delete_debt', id=debtor.id) }}">Delete</a>
-                <a href="{{ url_for('edit_debt', id=debtor.id) }}">Edit</a>
+                <div>{{ debtor.name }}  {{ debtor.money }}</div>
+                <form action="{{ url_for('delete_debt', id=debtor.id) }}">
+                    <input type="submit" value="Delete">
+                </form>
+                <form action="{{ url_for('edit_debt', id=debtor.id) }}">
+                    <input type="submit" value="Edit">
+                </form>
             </div>
         {% endfor %}
     </div>
@@ -37,11 +43,6 @@ Cash debt
 {% if errors %}
     {{ errors }}
 {% endif %}
-<dt>
-    <a href="{{ url_for('add_debt') }}">
-        add Debtor
-    </a>
-</dt>
 
 
 {% endblock %}
