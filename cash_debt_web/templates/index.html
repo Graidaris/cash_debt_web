@@ -8,22 +8,32 @@ Cash debt
     <a href="{{ url_for('sign_out') }}">Sign out</a>
 {% endblock %}
 
+{% block head %}
+<link href="../static/css/index.css" rel="stylesheet"> 
+{% endblock %}
+
 {% block body %}
 
-<h2>Hello  {{ username.email }} !</h2>
-
-<h1>Your's debtors:</h1>
-
-{% for debtor in debtors %}
-<div>
-    <dt>{{ debtor.name }}
-        {{ debtor.money }}</dt>
+<div class="user_debtors">
+    <div class="user">Hello  {{ username.email }} !</div>
     
-    <a href="{{ url_for('delete_debt', id=debtor.id) }}">Delete</a>
-    <a href="{{ url_for('edit_debt', id=debtor.id) }}">Edit</a>
+    <div class="all_debtors">
+        {% for debtor in debtors %}
+            <div class="debtor">
+                <dt>{{ debtor.name }}
+                    {{ debtor.money }}</dt>
+                
+                <a href="{{ url_for('delete_debt', id=debtor.id) }}">Delete</a>
+                <a href="{{ url_for('edit_debt', id=debtor.id) }}">Edit</a>
+            </div>
+        {% endfor %}
+    </div>
 </div>
 
-{% endfor %}
+
+
+
+
 {% if errors %}
     {{ errors }}
 {% endif %}

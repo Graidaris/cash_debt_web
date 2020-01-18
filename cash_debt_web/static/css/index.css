@@ -1,0 +1,32 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+
+.user_debtors{
+    width: 600px;
+    padding: 8% 0 0;
+    margin: auto;
+    background-color: red;
+    
+}
+.all_debtors{
+    float: left;
+    width: 60%;
+}
+.user{
+    background-color: brown;
+    text-overflow: clip;
+    overflow: hidden; 
+    float: right;
+    width: 40%;
+    height: 100%;
+}
+.debtor{
+    background-color: azure;
+    color: #4d4d4d;
+    font-size: 34px;
+    padding: 3% 0 0;
+    margin-top: 2px;
+}
+
+.debtor a{
+    font-size: 18px;
+}
