@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}
+Edit debtor
+{% endblock %}
+
+{% block header %}
+<a href="{{ url_for('index') }}">Main</a>
+    <a href="{{ url_for('sign_out') }}">Sign out</a>
+{% endblock %}
+
+
+{% block body %}
+<form action="" method="post">
+<input type="text" name="name" id="name" value="{{ debtor.name }}">
+<input type="number" name="money" id="money" value="{{ debtor.money }}">
+<input type="text" name="description" id="description" value="{{ debtor.description }}">
+<input type="submit" value="edit_debtor">
+</form>
+
+{% if error %}
+{{ error }}
+{% endif %}
+
+{% endblock %}
