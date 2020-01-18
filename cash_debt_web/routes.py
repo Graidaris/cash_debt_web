@@ -11,7 +11,7 @@ def login():
     if request.method == 'POST':
         what_return = None
         if 'register' in request.form:
-            what_return = redirect('/reg')
+            what_return = registration()
         elif 'login' in request.form:
             email = request.form.get('email')
             password = request.form.get('password')
@@ -49,12 +49,15 @@ def sign_out():
 
 @app.route('/reg', methods=['POST', 'GET'])
 def registration():
+    
     if request.method == 'POST':
+        
         password = request.form.get('password')
         user_email = request.form.get('email')
-        
+        user = User.query.filter_by(email=user_email).first()
         if User.query.filter_by(email=user_email).first() is not None:
             return render_template('registry.html', errors="This email already exist")
+        
         
         new_user = User(email=user_email, password=password)
         new_user.set_password(password)
@@ -68,7 +71,8 @@ def registration():
         
         return redirect(url_for('index'))
     else:
-        return render_template('registry.html')
+        #return render_template('registry.html')
+        return redirect(url_for('login'))
     
     
 @app.route('/add_debt', methods=['POST', 'GET'])
