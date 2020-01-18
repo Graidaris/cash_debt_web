@@ -12,7 +12,7 @@ Edit debtor
 {% block body %}
 <form action="" method="post">
 <input type="text" name="name" id="name" value="{{ debtor.name }}">
-<input type="number" name="money" id="money" value="{{ debtor.money }}">
+<input type="number" step="0.01" name="money" id="money" value="{{ debtor.money }}">
 <input type="text" name="description" id="description" value="{{ debtor.description }}">
 <input type="submit" value="edit_debtor">
 </form>
