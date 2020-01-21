@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<form action="" method="POST" novalidate>
+    {{ form.hidden_tag() }}
+    {{ form.email.label }}
+    {{ form.email(size=50) }}
+    {{ form.password.label }}
+    {{ form.password }}
+    {{ form.remember_me.label }}
+    {{ form.remember_me }}
+    {{ form.submit }}
+</form>
+
+    {% with messeges = get_flashed_messages() %}
+        {% if messeges %}
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+{% endblock %}

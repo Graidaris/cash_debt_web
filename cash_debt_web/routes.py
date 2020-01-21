@@ -1,9 +1,36 @@
-from flask import render_template, request, redirect, url_for, session
+from flask import render_template, request, redirect, url_for, session, flash
 from werkzeug.security import generate_password_hash
 from cash_debt_web import app
 from cash_debt_web.models import User
 from cash_debt_web.models import Debtor
 from cash_debt_web import db
+from cash_debt_web import login_manager
+from flask_login import current_user, login_user
+from cash_debt_web.forms import LoginForm
+
+
+@app.route('/logint', methods=['POST', 'GET'])
+def login_test():
+    form = LoginForm()
+    if form.validate_on_submit():
+        email = form.email.data
+        password = form.password.data
+        user = User.query.filter_by(email=email).first()
+        
+        if user is None or not user.check_password(password):
+            flash('Invalid password or user not found')
+            return redirect(url_for('login_test'))
+        
+        login_user(user)
+        return redirect(url_for('index'))
+    
+    return render_template("login_test.html", form=form)
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    """User loader needed for the login manager work. Returns id of the user"""
+    return User.query.get(int(id))
 
 
 @app.route('/login', methods=['POST', 'GET'])
