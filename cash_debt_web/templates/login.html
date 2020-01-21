@@ -8,19 +8,42 @@ Login
 {% block body %}
 <div class="login-page">
     <div class="form">
-      <form action="" method="POST" class="register-form">
-        <input type="email" placeholder="email"  name="email" id="email" required/>
-        <input type="password" placeholder="password" name="password" id="password" required/>
-        <button type="submit" name="register" value="Registration">create</button>
+      <form action="" method="POST" class="register-form" novalidate>
+        {{ registration_form.hidden_tag() }}
+        {{ registration_form.email.label }}
+        {{ registration_form.email(size=50) }}
+        {{ registration_form.password.label }}
+        {{ registration_form.password }}
+        {{ registration_form.submit }}
         <p class="message">Already registered? <a >Sign In</a></p>
-        <div class="errors">{{ errors }}</div>
+        <div class="errors">
+          {% with messeges = get_flashed_messages() %}
+              {% if messeges %}
+                  {% for message in messages %}
+                      <p>{{ message }}</p>
+                  {% endfor %}
+              {% endif %}
+          {% endwith %}
+        </div>
       </form>
-      <form  action="" method="POST" class="login-form">
-        <input type="email" placeholder="email"  name="email" id="email" required/>
-        <input type="password" placeholder="password" name="password" id="password" required/>
-        <button type="submit" name="login" value="Log In">login</button>        
+      
+      <form  action="" method="POST" class="login-form" novalidate>
+        {{ login_form.hidden_tag() }}
+        {{ login_form.email.label }}
+        {{ login_form.email(size=50) }}
+        {{ login_form.password.label }}
+        {{ login_form.password }}
+        {{ login_form.submit }}
         <p class="message">Not registered? <a >Create an account</a></p>
-        <div class="errors">{{ errors }}</div>
+        <div class="errors">
+          {% with messeges = get_flashed_messages() %}
+              {% if messeges %}
+                  {% for message in messages %}
+                      <p>{{ message }}</p>
+                  {% endfor %}
+              {% endif %}
+          {% endwith %}          
+        </div>
       </form>
     </div>
    

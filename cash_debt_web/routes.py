@@ -5,73 +5,76 @@ from cash_debt_web.models import User
 from cash_debt_web.models import Debtor
 from cash_debt_web import db
 from cash_debt_web import login_manager
-from flask_login import current_user, login_user
-from cash_debt_web.forms import LoginForm
+from flask_login import current_user, login_user, logout_user
+from cash_debt_web.forms import LoginForm, RegisterForm
 
 
-@app.route('/logint', methods=['POST', 'GET'])
-def login_test():
-    form = LoginForm()
-    if form.validate_on_submit():
-        email = form.email.data
-        password = form.password.data
+@app.route('/login', methods=['POST', 'GET'])
+def login():    
+    if current_user.is_authenticated is True:
+        return redirect(url_for('index'))
+    
+    login_form = LoginForm()
+    registration_form = RegisterForm()
+    
+    if login_form.validate_on_submit():
+        email = login_form.email.data
+        password = login_form.password.data
         user = User.query.filter_by(email=email).first()
         
         if user is None or not user.check_password(password):
             flash('Invalid password or user not found')
-            return redirect(url_for('login_test'))
-        
+            return redirect(url_for('login'))        
         login_user(user)
         return redirect(url_for('index'))
     
-    return render_template("login_test.html", form=form)
+    elif registration_form.validate_on_submit():
+        email = registration_form.email.data
+        password = registration_form.password.data
+        
+        check_user_exist = User.query.filter_by(email=email).first()
+        if check_user_exist is not None:
+            flash('User is exist')
+            return redirect(url_for('login'))
+        
+        new_user = User(email=email)
+        new_user.set_password(password)
+        
+        try:
+            db.session.add(new_user)
+            db.session.commit()
+            print("We've a new user!")
+        except:
+            print('There was an issue adding a new user :C')
+        
+        login_user(new_user)
+        return redirect(url_for('index'))
+    else:
+        print(f"Registration: {registration_form.is_submitted()}\t Login: {login_form.is_submitted()}")
+    return render_template("login.html", login_form=login_form, registration_form=registration_form)
+
+
+@app.route('/index', methods=['POST', 'GET'])
+def index():
+    if current_user.is_authenticated is True:
+        debtors = Debtor.query.filter_by(FK_user=current_user.id).all()
+        return render_template('index.html', username=str(current_user.email), debtors=debtors ,errors=None)
+    else:
+        return redirect(url_for('login'))
 
 
 @login_manager.user_loader
 def load_user(user_id):
     """User loader needed for the login manager work. Returns id of the user"""
-    return User.query.get(int(id))
+    return User.query.get(int(user_id))
 
 
-@app.route('/login', methods=['POST', 'GET'])
-def login():    
-    if request.method == 'POST':
-        what_return = None
-        if 'register' in request.form:
-            what_return = registration()
-        elif 'login' in request.form:
-            email = request.form.get('email')
-            password = request.form.get('password')
-            user = User.query.filter_by(email=email).first()
-            
-            if user is not None:
-                password_is_correct = user.check_password(password)
-                if password_is_correct:
-                    session['CURRENT_USER'] = user.id
-                    what_return = redirect(url_for('index'))
-                else:
-                    what_return =  render_template('login.html', errors=f'Password is not correct') 
-            else:
-                what_return = render_template('login.html', errors=f'The user is not found')
-    else:
-        what_return = render_template('login.html')
-        
-    return what_return
-    
 
-@app.route('/', methods=['POST', 'GET'])
-def index():
-    user_id = session.get('CURRENT_USER')
-    if user_id is not None:
-        user = User.query.filter_by(id=user_id).first()
-        debtors = Debtor.query.filter_by(FK_user=user_id).all()
-        return render_template('index.html', username=user, debtors=debtors ,errors=None)
-    else:
-        return redirect(url_for('login'))
+
 
 @app.route('/signout')
 def sign_out():
-    session.pop("CURRENT_USER", None)    
+    logout_user()
     return redirect(url_for("login"))
 
 @app.route('/reg', methods=['POST', 'GET'])
