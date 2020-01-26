@@ -1,13 +1,16 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
 .user_debtors{
-    width: 600px;
-    padding: 4% 0 0;
+    width: 900px;
+    padding: 1% 0 0;
     margin: auto;
+    
 }
 .all_debtors{
     float: left;
-    width: 59%;
+    width: 70%;
+    max-height: 95vh;
+    overflow-y: scroll;
 }
 
 .debtor{
@@ -19,7 +22,17 @@
     margin-top: 2px;
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
     min-height: 100px;
-    height: 100px;
+}
+
+
+.debtor_name{
+    width: 50%;
+    float:left;
+}
+
+.debtor_cash{
+    width: 30%;
+    float: right;
 }
 
 .debtor a{
@@ -31,7 +44,7 @@
     text-transform: uppercase;
     outline: 0;
     background-color: #ff4c4c;
-    width: 40%;
+    width: 45%;
     border: 0;
     padding: 15px;
     color: #ffffff;
@@ -46,12 +59,12 @@
     clear: both;
 }
 
-input[type=submit], .add_debtor_button_open, .add_debt_submit {
+input[type=submit], .add_debtor_button_open, .add_debt_submit, .add_debtor_button_close {
     font-family: "Roboto", sans-serif;
     text-transform: uppercase;
     outline: 0;
     background: #4CAF50;
-    width: 100%;
+    width: 80%;
     border: 0;
     padding: 15px;
     color: #FFFFFF;
@@ -59,43 +72,43 @@ input[type=submit], .add_debtor_button_open, .add_debt_submit {
     -webkit-transition: all 0.3 ease;
     transition: all 0.3 ease;
     cursor: pointer;
-    margin-top: 2px;
+    margin-top: 10px;
 }
 .user{
-    background-color: #34bf49;
+    background-color: #f2f2f2;
     text-overflow: clip;
     overflow: hidden; 
     float: right;
-    width: 40%;
-    height: 100%;
+    width: 29%;
+    height: 95vh;
     padding: 3px;
-    color: #FFFFFF;
     font-size: 20px;
     text-align: center;
-    min-height: 100%;
-    height: 100%;
+    display: block;
+    position: absolute;
+    right: 10px;
 }
+
 
 .form-popup {
     display: none;
-    text-align: left;
     margin-top: 15px;
+    font-family: "Roboto", sans-serif;
+    outline: 0;
+    background: #f2f2f2;
+    width: 100%;
+    border: 0;
+    box-sizing: border-box;
+    font-size: 14px;
 }
 
 .form-popup input[type=text], .form-popup input[type=number]{
     width: 100%;
+    text-align: left;
+    padding: 10px;
+    font-size: 18px;
 }
 
 .add_debtor_button_close{
-    font-family: "Roboto", sans-serif;
-    text-transform: uppercase;
-    outline: 0;
     background-color: #ff4c4c;
-    width: 100%;
-    border: 0;
-    padding: 15px;
-    color: #ffffff;
-    font-size: 12px;
-    cursor: pointer;
-    float: left;
 }
