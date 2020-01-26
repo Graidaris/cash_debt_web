@@ -13,10 +13,18 @@ Cash debt
 <div class="user_debtors">
 
     <div class="user">You're sign in as: <strong>{{ username.email }}</strong>
-        <form action="{{ url_for('add_debt') }}">
-            <input  type="submit" value="Add debtor">
+        <button class="add_debtor_button_open" id="add_debtor_button" onclick="openForm()">Add debtor</button>
+        <form class="form-popup" action="" method="post" id="add_debt_form">
+            <b>Name</b>
+            <input type="text" name="name" id="name">
+            <b>How many</b>
+            <input type="number" step="0.01" name="money" id="money">
+            <b>Description</b>
+            <input type="text" name="description" id="description">
+            <button class="add_debt_submit" type="submit" name="add_debtor" >add debtor</button>
+            <button class="add_debtor_button_close" onclick="closeForm()">Close</button>
         </form>
-        <form action="{{ url_for('sign_out') }}">
+        <form class="sign_out_form" action="{{ url_for('sign_out') }}">
             <input type="submit" value="Sign Out">
         </form>
     </div>
@@ -36,7 +44,17 @@ Cash debt
     </div>
 </div>
 
-
+<script>
+    function openForm() {
+      document.getElementById("add_debt_form").style.display = "block";
+      document.getElementById("add_debtor_button").style.display = "none";
+    }
+    
+    function closeForm() {
+      document.getElementById("add_debt_form").style.display = "none";
+      document.getElementById("add_debtor_button").style.display = "block";
+    }
+</script>
 
 
 

@@ -3,7 +3,7 @@ from werkzeug.security import generate_password_hash
 from cash_debt_web import app, db, login_manager
 from cash_debt_web.models import User
 from cash_debt_web.models import Debtor
-from flask_login import login_user, logout_user, current_user
+from flask_login import login_user, logout_user, current_user, login_required
 
 
 @login_manager.user_loader
@@ -40,12 +40,15 @@ def login():
 @app.route('/', methods=['POST', 'GET'])
 def index():
     if current_user.is_authenticated:
+        if 'add_debtor' in request.form:
+            add_debt()
         debtors = Debtor.query.filter_by(FK_user=current_user.id).all()
         return render_template('index.html', username=current_user, debtors=debtors ,errors=None)
     else:
         return redirect(url_for('login'))
 
 @app.route('/signout')
+@login_required
 def sign_out():
     logout_user()
     return redirect(url_for("login"))
@@ -75,36 +78,31 @@ def registration():
         return redirect(url_for('login'))
     
     
-@app.route('/add_debt', methods=['POST', 'GET'])
-def add_debt():
-    if request.method == "POST":
-        name = request.form.get('name')
-        money = request.form.get('money')
-        description = request.form.get('description')
-        FK_user = current_user
-        
-        new_debter = Debtor(name=name, money=money, description=description, FK_user=FK_user.id)
-        errors = None
-        try:
-            db.session.add(new_debter)
-            db.session.commit()
-            return redirect(url_for('index'))
-        except Exception as e:
-            errors = e
-        
-        return render_template("add_debtor.html", error=errors)
-        
-    else:
-        return render_template("add_debtor.html")
+
+def add_debt():    
+    name = request.form.get('name')
+    money = request.form.get('money')
+    description = request.form.get('description')
+    FK_user = current_user
     
+    new_debter = Debtor(name=name, money=money, description=description, FK_user=FK_user.id)
+    errors = None
+    try:
+        db.session.add(new_debter)
+        db.session.commit()
+        return redirect(url_for('index'))
+    except Exception as e:
+        errors = e
+        
     
 @app.route('/del_debt/<int:id>')
+@login_required
 def delete_debt(id):
     debt_to_delete = Debtor.query.filter_by(id=id).first()
-    user_id = session.get('CURRENT_USER')##
+    user_id = current_user.id
     
     if debt_to_delete.FK_user != user_id:
-        return redirect(url_for('index'))##
+        return redirect(url_for('index'))
     
     try:
         db.session.delete(debt_to_delete)
@@ -115,6 +113,7 @@ def delete_debt(id):
     return redirect(url_for('index'))
 
 @app.route('/edit_debt/<int:id>', methods=['POST', 'GET'])
+@login_required
 def edit_debt(id):
     debt_to_edit = Debtor.query.filter_by(id=id).first()
     
@@ -139,5 +138,4 @@ def edit_debt(id):
         return redirect(url_for('index'))
     else:
         return render_template('edit_debt.html', debtor=debt_to_edit)
-    
     
